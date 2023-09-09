@@ -76,9 +76,25 @@ const BeerInfo = styled.span`
   margin-bottom: 10px;
 `;
 
+const LoaderContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px; /* Adjust the height as needed */
+`;
+
+const Loader = () => (
+  <LoaderContainer>
+    <div className="spinner-border text-primary" role="status">
+      <span className="visually-hidden">Loading...</span>
+    </div>
+  </LoaderContainer>
+);
+
 const BeerList = () => {
   const [beers, setBeers] = useState([]);
   const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchBeers = async () => {
@@ -112,36 +128,40 @@ const BeerList = () => {
   }, [page]);
 
   return (
-    <BeerListContainer>
-      {beers.map((beer) => (
-        <BeerCard key={beer.id}>
-          <BeerImage src={beer.image_url} alt={beer.name} />
-          <BeerTitle>{beer.name}</BeerTitle>
-          <BeerDescription>{beer.description}</BeerDescription>
-          <BeerDetails>
-            <BeerInfo>ABV: {beer.abv}%</BeerInfo>
-            <BeerInfo>IBU: {beer.ibu}</BeerInfo>
-          </BeerDetails>
-          <a
-            href={beer.tagline}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              marginTop: "auto",
-              textDecoration: "none",
-              backgroundColor: "#333",
-              color: "#fff",
-              padding: "8px 16px",
-              borderRadius: "20px",
-              fontSize: "14px",
-              fontWeight: "bold",
-            }}
-          >
-            Learn More
-          </a>
-        </BeerCard>
-      ))}
-    </BeerListContainer>
+    <div>
+      <BeerListContainer>
+        {beers.map((beer) => (
+          <BeerCard key={beer.id}>
+            <BeerImage src={beer.image_url} alt={beer.name} />
+            <BeerTitle>{beer.name}</BeerTitle>
+            <BeerDescription>{beer.description}</BeerDescription>
+            <BeerDetails>
+              <BeerInfo>ABV: {beer.abv}%</BeerInfo>
+              <BeerInfo>IBU: {beer.ibu}</BeerInfo>
+            </BeerDetails>
+            <a
+              href={beer.tagline}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                marginTop: "auto",
+                textDecoration: "none",
+                backgroundColor: "#333",
+                color: "#fff",
+                padding: "8px 16px",
+                borderRadius: "20px",
+                fontSize: "14px",
+                fontWeight: "bold",
+              }}
+            >
+              Learn More
+            </a>
+          </BeerCard>
+        ))}
+      </BeerListContainer>
+      {loading && <Loader />}{" "}
+      {/* Show the loader at the bottom when loading is true */}
+    </div>
   );
 };
 
