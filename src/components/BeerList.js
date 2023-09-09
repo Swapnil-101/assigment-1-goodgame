@@ -159,8 +159,7 @@ const BeerList = () => {
           </BeerCard>
         ))}
       </BeerListContainer>
-      {loading && <Loader />}{" "}
-      {/* Show the loader at the bottom when loading is true */}
+      {loading && <Loader />}
     </div>
   );
 };
